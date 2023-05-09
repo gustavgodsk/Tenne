@@ -1,0 +1,942 @@
+:root {
+  --skiX: 0px;
+  --skiLeftDistance: 0px;
+  --skiRightDistance: 0px;
+
+  --fieldWidth1: 49.5%;
+  --fieldWidth2: 1%;
+  --fieldWidth3: 49.5%;
+
+  --combobar: 0%;
+
+  --pointX: 0px;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+* {
+
+}
+
+
+.game-screen {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+
+
+#canvasBack {
+  z-index: 0;
+  display: block;
+  background-color: #efefef;
+}
+
+#canvasFront {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.field-container-div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -100%;
+  display: grid;
+  grid-template-columns: 49.5% 1% 49.5%;
+}
+
+@keyframes backgroundShow {
+  0%   {left: -100%;}
+  100% {left: 0%;}
+}
+
+.background-show {
+  animation: backgroundShow 1s;
+}
+
+@keyframes backgroundHide {
+  0%   {left: 0%;}
+  100% {left: -100%;}
+}
+
+.background-hide {
+  animation: backgroundHide 1s;
+}
+
+.border-div {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(161, 161, 161);
+}
+
+.field-div {
+  height: 100%;
+  width: 100%;
+  transition: background-color 300ms;
+  background-color: transparent;
+}
+
+.left-field-div {
+
+}
+
+.right-field-div {
+
+}
+
+@keyframes toCenter {
+  0% {
+    grid-template-columns: var(--fieldWidth1) var(--fieldWidth2) var(--fieldWidth3);
+  }
+  100% {
+    grid-template-columns: 49.5% 1% 49.5%;
+  }
+}
+
+.to-center {
+  animation: toCenter 300ms;
+  grid-template-columns: 49.5% 1% 49.5%;
+}
+
+
+.game-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-div {
+  position: absolute;
+  top: -20%;
+  justify-self: center;
+  align-self: center;
+  max-width: 50%;
+  z-index: 4;
+}
+
+.question-p {
+  text-align: center;
+  font-family: sans-serif;
+  color: #303030;
+}
+
+@keyframes questionShow {
+  0%   {
+    top: -20%;
+    font-size: 1.4rem;
+  }
+  20% {
+    top: 20%;
+    font-size: 2.5rem;
+  }
+  80% {
+    top: 20%;
+    font-size: 2.5rem;
+  }
+  100%   {
+    top: 0%;
+    font-size: 1.4rem;
+  }
+}
+
+.question-show {
+  animation: questionShow 4s;
+  top: 0%;
+  font-size: 1.4rem;
+
+}
+
+.time-div {
+  position: absolute;
+  bottom: 100%;
+  justify-self: center;
+  align-self: center;
+  max-width: 50%;
+  z-index: 4;
+  color: "black";
+  font-size: 5rem;
+  font-family: "Roboto";
+  text-shadow: 1px 1px#4c4c4c;
+}
+
+.time-p {
+  text-align: center;
+
+}
+
+@keyframes timeSlideIn {
+  0% {
+    bottom: 100%;
+  }
+  100% {
+    bottom: 70%;
+  }
+}
+
+@keyframes timeSlideOut {
+  0% {
+    bottom: 70%;
+  }
+  100% {
+    bottom: -50%;
+  }
+}
+
+.time-slide-in {
+  animation: timeSlideIn 400ms ease-out;
+  bottom: 70%;;
+}
+
+.time-slide-out {
+  animation: timeSlideOut 600ms ease;
+  bottom: -50%;
+}
+
+.svar-div {
+  position: absolute;
+  bottom: 100%;
+  font-size: 1.4rem;
+  max-width: 40%;
+  word-wrap: normal;
+  z-index: 5;
+  transition: bottom 300ms;
+}
+
+@keyframes slideIn {
+  0% {
+    bottom: 100%;
+  }
+  100% {
+    bottom: 60%;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    bottom: 60%;
+  }
+  100% {
+    bottom: -50%;
+  }
+}
+
+.slide-in {
+  animation: slideIn 400ms ease-out;
+  bottom: 60%;;
+}
+
+.slide-out {
+  animation: slideOut 600ms ease;
+  bottom: -50%;
+}
+
+.svar1-div {
+  left: 0;
+}
+
+.svar2-div {
+  right: 0;
+}
+
+@keyframes timeout {
+  0% {}
+  100% {}
+}
+
+
+
+.animation-div {
+}
+
+@keyframes followSkiLeft {
+  0%   {
+    left: 0px;
+    bottom: 60%;
+    font-size: 1.4rem;
+  }
+  100% {
+    left: var(--skiLeftDistance);
+    bottom: 50%;
+    font-size: 2.5rem;
+  }
+}
+
+@keyframes followSkiRight {
+  0%   {
+    right: 0px;
+    bottom: 60%;
+    font-size: 1.4rem;
+  }
+  100% {
+    right: var(--skiRightDistance);
+    bottom: 50%;
+    font-size: 2.5rem;
+  }
+}
+
+.follow-ski-left {
+  animation: followSkiLeft 400ms;
+  left: var(--skiLeftDistance);
+  bottom: 50%;
+  font-size: 2.5rem;
+}
+
+.follow-ski-right {
+  animation: followSkiRight 400ms;
+  right: var(--skiRightDistance);
+  bottom: 50%;
+  font-size: 2.5rem;
+}
+
+@keyframes unfollowSkiLeft {
+  0% {
+    left: var(--skiLeftDistance);
+    bottom: 50%;
+    font-size: 2.5rem;
+  }
+  100%   {
+    left: 0px;
+    bottom: 60%;
+    font-size: 1.4rem;
+  }
+}
+
+@keyframes unfollowSkiRight {
+  0% {
+    right: var(--skiRightDistance);
+    bottom: 50%;
+    font-size: 2.5rem;
+  }
+  100%   {
+    right: 0px;
+    bottom: 60%;
+    font-size: 1.4rem;
+  }
+}
+
+.unfollow-ski-left {
+  animation: unfollowSkiLeft 200ms;
+  left: 0px;
+  bottom: 60%;
+  font-size: 1.4rem;
+}
+
+.unfollow-ski-right {
+  animation: unfollowSkiRight 200ms;
+  right: 0px;
+  bottom: 60%;
+  font-size: 1.4rem;
+}
+
+
+.svar-div p {
+  font-size: inherit;
+  font-family: sans-serif;
+  margin: 20px;
+  color: #303030;
+}
+
+
+
+.ski-div {
+  position: absolute;
+  bottom: 200px;
+  left: 100px;
+  transform: rotate(-90deg);
+  display: none;
+}
+
+.ski-jump-div {
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms ease-in;
+}
+
+.ski-rotate-div {
+  width: 100%;
+  height: 100%;
+  transition: all 300ms ease-out;
+}
+
+.ski-img-div {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  position: relative;
+  top: 0px;
+  grid-gap: 5px;
+
+}
+
+.ski-img {
+  width: 100%;
+  position: relative;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition: all 200ms;
+}
+
+.tree {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  z-index: 2;
+}
+
+@keyframes skewGate {
+  0% {transform: skewX(0deg);}
+  50% {transform: skewX(20deg);}
+  1000% {transform: skewX(0deg);}
+  
+}
+
+.gate {
+  position: absolute;
+  height: 100px;
+  z-index: 2;
+  animation: skewGate 1s infinite;
+}
+
+.ski-img.crossSkiLeft {
+  transform: rotateZ(30deg);
+  top: 20px;
+}
+
+.ski-img.crossSkiRight {
+  transform: rotateZ(-30deg);
+  bottom: 20px;
+}
+
+
+@keyframes skisJumping {
+  0%   {transform:scale(1);}
+  50%   {transform:scale(2);}
+  100% {transform:scale(1);}
+}
+
+.jumping {
+  animation: skisJumping 1s ease;
+}
+
+.spreadLeft {
+  top: -50px !important;
+}
+
+.spreadRight {
+  top: 50px !important;
+}
+
+@keyframes skisRotatingRight {
+  0%   {transform:rotate(0deg);}
+  100% {transform:rotate(360deg);}
+}
+
+.rotatingRight {
+  animation: skisRotatingRight 1000ms;
+}
+
+@keyframes skisRotatingLeft {
+  0%   {transform:rotate(0deg);}
+  100% {transform:rotate(-360deg);}
+}
+
+.rotatingLeft {
+  animation: skisRotatingLeft 1000ms;
+}
+
+
+
+
+/*   
+
+    MENU
+
+*/
+
+.menu-screen {
+  width: 100%;
+  max-height: 101vh;
+  height: 100%;
+  background-color: transparent;
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+@keyframes scaleOut {
+  0%   {transform:scale(1);}
+  100% {transform:scale(0); opacity: 0;}
+}
+
+.scale0 {
+  animation: scaleOut 700ms ease;
+}
+
+@keyframes scaleIn {
+  0%   {transform:scale(0);}
+  100% {transform:scale(1);opacity:1;}
+}
+.scale1 {
+
+  animation: scaleIn 1s;
+
+}
+
+.paused {
+  
+}
+
+.menu-left-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.menu-left-div img {
+  width: 50%;
+}
+
+.menu-left-div img:hover {
+  cursor: pointer;
+}
+
+.menu-button-div {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.3rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-button-div button {
+  width: 100%;
+  background-color: #4186da;
+  color: white;
+  font-family: Helvetica, sans-serif;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.4rem;
+  padding: 1rem;
+  font-weight: bold;
+  transition: 200ms;
+  box-shadow: 1px 2px 2px#545252;
+}
+
+#spil-button {
+  font-size: 2.9rem;
+}
+
+.menu-left-div button:hover {
+  background-color: #0769e0;
+}
+
+.menu-left-div button:active {
+  background-color: #095bbe;
+  transform: scale(0.99);
+}
+
+.menu-left-div button:focus {
+  outline: none;
+}
+
+.menu-right-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ski-menu {
+  width: 70%;
+  max-height: 90vh;
+  height: 500px;
+  display: grid;
+  grid-template-rows: 1fr 5fr 3fr;
+  background-color: #4186da;
+  border-radius: 10px;
+  box-shadow: 1px 3px 4px#545252;
+  z-index: 1;
+
+}
+
+.ski-titel-div {
+  display: grid;
+  grid-template-columns: 50px auto 50px;
+}
+
+.ski-titel-div button {
+  font-size: 2rem;
+  background-color: transparent;
+  border: none;
+  color: #303030;
+}
+
+.ski-titel-div button:hover {
+  color: #515050;
+}
+
+.ski-titel-div button:focus {
+  outline: none;
+}
+
+#ski-titel-left-arrow {
+  transform: rotate(180deg);
+}
+
+
+
+.ski-titel-div p {
+  margin: 0;
+  display: flex;
+  width: 100%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-family: sans-serif;
+  font-weight: bolder;
+  color: #303030;
+}
+
+.ski-menu-img-div {
+  width: 80%;
+  justify-self: center;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  background-color: #d0cdcd;
+  border-radius: 5px 5px 15px 15px;
+  box-shadow: 0px 0px 2px#483b3b;
+  position: relative;
+}
+
+
+
+.ski-menu-img-inner-div{
+  min-width: 120%;
+  rotate: -45deg;
+  max-width: 300px;
+
+  transition: 800ms;
+}
+
+.ski-menu-img {
+  width: 100%;
+}
+
+.ski-menu-stats-div {
+  align-self: center;
+  justify-self: center;
+  padding: 10px;
+  width: 80%;
+  height: auto;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  row-gap: 1rem;
+}
+
+.ski-menu-stat {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 60%;
+  align-content: center;
+}
+
+.ski-menu-stat label {
+  text-transform: uppercase;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #303030;
+  justify-self: flex-end;
+  margin-right: 10px;
+}
+
+.ski-menu-statbar-div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(to right, #51f67d,  #ff3f3f);
+  justify-content: flex-end;
+  overflow: hidden;
+  border: none;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.ski-menu-statbar {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+  background-color: #4186da;
+  border-radius: 0;
+  transition: 400ms ease-out;
+}
+
+.ski-menu-statbar:before {
+  content: "";
+  position: absolute;
+  
+  background-color: transparent;
+  left: -20px;
+  height: 100%;
+  width: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 10px 0 0 0 #4186da;
+}
+
+
+/*
+
+    PAUSE
+
+*/
+
+.pause-screen {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 7;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  transform: scale(0);
+}
+
+.control-div {
+  position: absolute;
+  left: 0;
+  align-self: center;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 20px;
+  font-family: sans-serif;
+  background-color: #efefef;
+  border-radius: 10px;
+  box-shadow: 2px 2px 0px rgb(90, 89, 89);
+  border: 1px solid rgb(162, 161, 161);
+}
+
+.control-div h2 {
+  margin: 0;
+}
+
+.control-div p {
+  margin: 0;
+  padding-top: 10px;
+}
+
+.pause-button-div {
+  width: 25%;
+}
+
+.pause-button-div button:hover {
+  background-color: #0769e0;
+}
+
+.pause-button-div button:active {
+  background-color: #095bbe;
+  transform: scale(0.99);
+}
+
+.pause-button-div button:focus {
+  outline: none;
+}
+
+#fortsæt-button {
+  font-size: 2.4rem;
+}
+
+/*
+
+      OVERLAY
+
+*/
+
+.overlay-screen {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  position: absolute;
+  display: grid;
+  grid-template-rows: 100%;
+  z-index: 6;
+  pointer-events:none;
+}
+
+.combobar-div {
+  align-self: flex-end;
+  justify-self: center;
+  position: absolute;
+  bottom: 100%;
+  transition: bottom 300ms;
+  background-color: rgb(192, 192, 192);
+  border-radius: 15px;
+  min-width: 200px;
+  width: 30%;
+  max-width: 80vw;
+  margin: 20px;
+  box-shadow: 2px 2px 2px rgb(137, 137, 137);
+  overflow: hidden;
+}
+
+@keyframes combobarShow {
+  0% {
+    bottom: 100%;
+  }
+  100% {
+    bottom: 0%;
+  }
+}
+
+.combobar-show {
+  animation: combobarShow 300ms;
+  bottom: 0%;
+}
+
+.carve-time-p {
+  background-color: rgb(116, 194, 92);
+  color: transparent;
+  padding: 1%;
+  text-align: right;
+  font-size: 0.5rem;
+  border-radius: 15px;
+  width: 0%;
+
+}
+
+.points-div {
+  display: flex;
+  position: absolute;
+  flex-direction: row;
+  justify-self: flex-end;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  top: -20%;
+  transition: all 300ms;
+  padding: 20px;
+}
+
+@keyframes pointsShow {
+  0% {
+    top: -20%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+.points-show {
+  animation: pointsShow 300ms;
+  top: 0%;
+}
+
+.points-div p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.4rem;
+  margin: 0;
+  padding: 5px;
+  color:  rgba(236,172,32,1);
+  font-weight: bolder;
+  text-shadow: 1px 1px rgb(172, 119, 6);
+}
+
+.points-p {
+  font-weight: lighter;
+}
+
+.point-p {
+  position: absolute;
+  animation: pointShow 2000ms ease;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2rem;
+  margin: 0;
+  padding: 5px;
+  font-weight: bolder;
+
+  background: linear-gradient(90deg, rgba(186,148,62,1) 0%, rgba(236,172,32,1) 20%, rgba(186,148,62,1) 39%, rgba(249,244,180,1) 50%, rgba(186,148,62,1) 60%, rgba(236,172,32,1) 80%, rgba(186,148,62,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;	
+  
+  background-size: 200%;
+  background-position: left;
+}
+
+@keyframes shine {
+  to{background-position: right}
+ 
+}
+
+@keyframes pointShow {
+  0% {
+    transform: scale(0);
+    left: var(--pointX);
+    top: 350px;
+  }
+
+  15% {
+    transform: scale(1.1);
+
+  }
+
+  17% {
+    transform: scale(1);
+
+  }
+
+  60% {
+    left: var(--pointX);
+    top: 350px;
+  }
+
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    background-position: right;
+    top: 0%;
+    left: 95%;
+    transform: scale(0);
+  }
+}
