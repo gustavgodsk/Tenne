@@ -8,8 +8,8 @@ class Menu {
   Start(){
     main.Start();
 
-    if (main.mode == "Training"){
-      main.modes.training.Hide();
+    if (main.mode == "Spil"){
+      main.modes.spil.Hide();
     } else if (main.mode == "Frispil"){
       main.modes.frispil.Hide();
     }

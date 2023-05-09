@@ -2,7 +2,7 @@
 
 
 
-class Training {
+class Spil {
   constructor(){
     this.question = null;
     this.background = null;
@@ -14,7 +14,7 @@ class Training {
   }
 
   Start(){
-    main.mode = "Training";
+    main.mode = "Spil";
     main.Start();
     main.modes.menu.Hide();
     this.question = new Question();
@@ -32,8 +32,9 @@ class Training {
     }, 1000/60);
     main.intervals.push(interval);
 
-    //Call this.Run() function 60 times/sec
+    //Call this method 60 times/sec
     interval = setInterval(() => {
+      //Countdown
       this.DecreaseTime();
     }, 1000/10);
     main.intervals.push(interval);
@@ -111,7 +112,7 @@ class Training {
     main.modes.menu.Start();
   }
 
-  //Hide training mode
+  //Hide spil mode
   Hide(){
     this.question.Hide();
     this.background.Hide();
@@ -168,7 +169,7 @@ class Question {
   Next(){
     //If not questions left in array
     if (this.i + 1 >= this.questions.length){
-      main.modes.training.EndScreen();
+      main.modes.spil.EndScreen();
       return;
     }
     //Choose next question in array
@@ -198,15 +199,13 @@ class Question {
   //Begin the game
   Ready(){
 
-    main.modes.training.question.elements.Div().removeEventListener("animationend", this.Ready);
+    main.modes.spil.question.elements.Div().removeEventListener("animationend", this.Ready);
 
     //Svarmuligheder slide in
-    main.modes.training.svarmuligheder.SlideIn();
-
-    main.ShowOverlay();
+    main.modes.spil.svarmuligheder.SlideIn();
 
     //Makes player able to die
-    main.modes.training.invincible = false;
+    main.modes.spil.invincible = false;
 
   }
 
@@ -231,11 +230,11 @@ class Question {
       return;
     }
     this.isReady = false;
-    main.modes.training.background.canSelect = false;
+    main.modes.spil.background.canSelect = false;
 
 
     //If wrong answer
-    if (main.modes.training.svarmuligheder.GetSelectedAnswer().textContent !== this.currentQuestion.rigtigtSvar[0]){
+    if (main.modes.spil.svarmuligheder.GetSelectedAnswer().textContent !== this.currentQuestion.rigtigtSvar[0]){
       this.WrongAnswer();
     } 
     //If right answer
@@ -243,18 +242,18 @@ class Question {
       this.RightAnswer();
     }
 
-    //3000 ms timeout
+    //4000 ms timeout
     //call PostQuestionScreen() after time
     //pass "this" at parameter to allow PostQuestionScreen() to access "this" keyword
     main.SetAnimationTimeout(4000, this.PostQuestionScreen, this);
   }
 
   WrongAnswer(){
-    main.modes.training.background.GetSelectedField().style.backgroundColor = "#ff4d4d";
+    main.modes.spil.background.GetSelectedField().style.backgroundColor = "#ff4d4d";
   }
 
   RightAnswer(){
-    main.modes.training.background.GetSelectedField().style.backgroundColor = "#2bff4b";
+    main.modes.spil.background.GetSelectedField().style.backgroundColor = "#2bff4b";
 
     //add points if correct answer
     const points = Math.floor(500 + 0.5 * main.ski.carveTime + 50 * (1 + this.time));
@@ -273,8 +272,8 @@ class Question {
   }
 
   ResetQuestion(){
-    main.modes.training.background.ToCenter();
-    main.modes.training.svarmuligheder.SlideOut();
+    main.modes.spil.background.ToCenter();
+    main.modes.spil.svarmuligheder.SlideOut();
     this.Hide();
 
     //Next question after 1 sec
@@ -302,7 +301,7 @@ class Question {
 
   GetSelectedIndex(){
     let answerI;
-    main.modes.training.svarmuligheder.elements.svarDivs.forEach((e, i) => {
+    main.modes.spil.svarmuligheder.elements.svarDivs.forEach((e, i) => {
       if (e.classList.contains("follow-ski-right") || e.classList.contains("follow-ski-left")){
         answerI = i;
       }
@@ -381,7 +380,7 @@ class Background {
       fields[0].style.backgroundColor = "#7dc2e3";
       fields[1].style.backgroundColor = "transparent";
 
-      let svarmuligheder = main.modes.training.svarmuligheder;
+      let svarmuligheder = main.modes.spil.svarmuligheder;
       if (svarmuligheder.selectable){
         svarmuligheder.SelectAnswer(0);
         svarmuligheder.UnselectAnswer(1);
@@ -393,7 +392,7 @@ class Background {
       fields[1].style.backgroundColor = "#7dc2e3";
       fields[0].style.backgroundColor = "transparent";
 
-      let svarmuligheder = main.modes.training.svarmuligheder;
+      let svarmuligheder = main.modes.spil.svarmuligheder;
       if (svarmuligheder.selectable){
         svarmuligheder.SelectAnswer(1);
         svarmuligheder.UnselectAnswer(0);
@@ -449,7 +448,7 @@ class Background {
     this.fieldWidth = [49.5, 1, 49.5]
 
     el.addEventListener("animationend", function placeholderName(){
-      main.modes.training.background.UnCenter();
+      main.modes.spil.background.UnCenter();
     })
 
   }
@@ -461,8 +460,8 @@ class Background {
 
     el.classList.remove("to-center");
     el.style.gridTemplateColumns = "49.5% 1% 49.5%"; 
-    main.modes.training.background.canSelect = true;
-    main.modes.training.background.canMove = true;
+    main.modes.spil.background.canSelect = true;
+    main.modes.spil.background.canMove = true;
 
   }
 
@@ -599,8 +598,8 @@ class Svarmuligheder {
     });
 
     //Slide in time div
-    const timeDiv = main.modes.training.question.elements.timeDiv;
-    const timeP = main.modes.training.question.elements.timeP;
+    const timeDiv = main.modes.spil.question.elements.timeDiv;
+    const timeP = main.modes.spil.question.elements.timeP;
 
     //Slide out time div
     timeDiv.classList.remove("time-slide-in");
@@ -610,7 +609,7 @@ class Svarmuligheder {
 
   SlideIn(){
     //Reset time
-    main.modes.training.question.time = main.modes.training.question.startTime;
+    main.modes.spil.question.time = main.modes.spil.question.startTime;
     
     //Slide in svarmuligheder
     let el = this.elements.svarDivs;
@@ -622,14 +621,14 @@ class Svarmuligheder {
         e.removeEventListener("animationend", placeholderName);
         
         //When ready to answer, "isReady"
-        main.modes.training.question.isReady = true;
-        main.modes.training.svarmuligheder.selectable = true;
+        main.modes.spil.question.isReady = true;
+        main.modes.spil.svarmuligheder.selectable = true;
       });
     });
 
     //Slide in time div
-    const timeDiv = main.modes.training.question.elements.timeDiv;
-    const timeP = main.modes.training.question.elements.timeP;
+    const timeDiv = main.modes.spil.question.elements.timeDiv;
+    const timeP = main.modes.spil.question.elements.timeP;
 
     timeDiv.classList.remove("time-slide-out");
     timeDiv.classList.add("time-slide-in");

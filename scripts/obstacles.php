@@ -61,8 +61,8 @@ class Obstacles {
         main.ski.carveTime -= 20;
 
         //End game if hitting obstacle when at 0 carveTime
-        if (main.ski.carveTime <= 0 && main.mode == "Training"){
-          main.modes.training.Die("Obstacle");
+        if (main.ski.carveTime <= 0 && main.mode == "Spil"){
+          main.modes.spil.Die("Obstacle");
         }
       }
 
@@ -158,7 +158,7 @@ class Tree {
   }
 
   Move(){
-    //y position
+    //tree y position
     this.y += main.ski.yFart - Math.abs(main.ski.rotation) * main.ski.yAcceleration;
     this.img.style.top = this.y + "px";
 

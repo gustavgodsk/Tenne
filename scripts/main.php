@@ -17,7 +17,7 @@ class Main {
 
     this.modes = {
       //spil: new Spil(),
-      training: new Training(),
+      spil: new Spil(),
       frispil: new Frispil(),
       menu: new Menu()
     }
@@ -189,7 +189,7 @@ class Main {
     //spil
     const spilBtn = document.querySelector("#spil-button");
     spilBtn.addEventListener("click", () => {
-      this.modes.training.Start();
+      this.modes.spil.Start();
     })
 
     //frispil
@@ -235,7 +235,7 @@ class Main {
 
     if (e.key == "Enter"){
       if (main.mode == "Menu"){
-        main.modes.training.Start();
+        main.modes.spil.Start();
       }
     }
 
@@ -265,7 +265,7 @@ class Main {
     }
 
     if (e.key == "q" || e.key == "ArrowUp"){
-      main.modes.training.question.ChooseAnswer();
+      main.modes.spil.question.ChooseAnswer();
     }
   }
 
@@ -453,9 +453,9 @@ class Main {
     //Resume css animations
     this.ResumeAllAnimations();
 
-    //Training-mode only
-    if (this.mode == "Training"){
-      this.modes.training.Resume();
+    //Spil-mode only
+    if (this.mode == "Spil"){
+      this.modes.spil.Resume();
     }
   }
 
@@ -476,9 +476,9 @@ class Main {
     //Pauses animations
     this.PauseAllAnimations();
 
-    //Training-mode only
-    if (this.mode == "Training"){
-      this.modes.training.Pause();
+    //Spil-mode only
+    if (this.mode == "Spil"){
+      this.modes.spil.Pause();
     }
   }
 
